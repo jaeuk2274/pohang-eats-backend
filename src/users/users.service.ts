@@ -10,17 +10,17 @@ export class UserService{
         @InjectRepository(User) private readonly users: Repository<User>,
     ) {}
 
-    async createAccount({email, password, role}: CreateAccountInput): Promise<string | undefined>  {
-        console.log("service", email, password, role);
+    async createAccount({email, password, role}: CreateAccountInput): Promise<{ ok: boolean; error?: string }>  {
         try{
-            const exist = await this.users.findOne({email}); // 잘 확인할것, ({})로는 해당 컨텐츠 확인, ()는 id
-            if(exist){
-                return 'There is a user with that email already';
+            const exist = await this.users.findOne({ email }); // 잘 확인할것, ({})로는 해당 컨텐츠 확인, ()는 id
+            if (exist) {
+                return { ok: false, error: 'There is a user with that email already' };
             } 
             await this.users.save(this.users.create({email, password, role}));
+            return { ok: true };
         }
         catch(e){
-            return "Couldn't create account";
+            return { ok: false, error: "Couldn't create account" };
         }
     } 
 }
