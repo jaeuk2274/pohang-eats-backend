@@ -115,7 +115,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# config
+# config 
+# 추후 풀기
 #.env
 #.env.dev
 #.env.test

@@ -2,9 +2,13 @@
 
 The backend of Pohang Eats 
 
+- NestJS
+- React
+- TypeScript
+- NodeJS
+- GraphQL
+- Apollo
 - TypeORM
-- Postgres
-
 
 
 ### Memo
@@ -16,3 +20,22 @@ The backend of Pohang Eats
     - https://joshua1988.github.io/web-development/javascript/promise-for-beginners/
 
 
+
+## User Model:
+
+- id
+- createdAt
+- updatedAt
+
+- email
+- password
+- role(client|owner|delivery)
+
+
+## User CRUD:
+
+- Create Account
+- Log In
+- See Profile
+- Edit Profile
+- Verify Email
