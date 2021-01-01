@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ok } from "assert";
 import { CreateAccountInput, CreateAccountOutput } from "./dtos/create-user.dto";
 import { LoginInput, LoginOutput } from "./dtos/login.dto";
@@ -35,4 +35,7 @@ export class UserResolve{
             }
         };
     }
+
+    @Query(returns => User)
+    me() {}
 }
