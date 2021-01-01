@@ -12,9 +12,7 @@ export class UserResolve{
     @Mutation(returns => CreateAccountOutput)
     async createAccount(@Args('input') createAccountInput: CreateAccountInput): Promise<CreateAccountOutput> {
         try {
-            const { ok, error } =  await this.users.createAccount(
-                createAccountInput,
-            );
+            const { ok, error } =  await this.users.createAccount(createAccountInput);
             return {
                 ok,
                 error
@@ -28,7 +26,8 @@ export class UserResolve{
     @Mutation(returns => LoginOutput)
     async login(@Args('input') loginInput: LoginInput): Promise<LoginOutput> {
         try {
-            return this.users.login(loginInput);
+            const {ok, error, token} = await this.users.login(loginInput);
+            return {ok, error, token};
         } catch (error) {
             return {
                 ok:false,

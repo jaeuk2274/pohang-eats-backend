@@ -22,6 +22,10 @@ The backend of Pohang Eats
 - async & await
     - https://joshua1988.github.io/web-development/javascript/js-async-await/
 
+- secret genreate key
+- jwt.io
+
+
 ## User Model:
 
 - id
