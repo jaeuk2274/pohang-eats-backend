@@ -1,5 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction } from 'express';
+import { decode } from 'querystring';
 import { JwtService } from './jwt.service';
 
 @Injectable()
@@ -10,6 +11,11 @@ export class jwtMiddleWare implements NestMiddleware {
     if ('x-jwt' in req.headers) {
       const token = req.headers['x-jwt'];
       console.log('token -', token);
+      const decoded = this.jwtService.verify(token);
+      console.log('decoded -', decoded);
+      if (typeof decoded === 'object' && decoded.hasOwnProperty('id')) {
+        console.log(decoded['id']);
+      }
     }
     next();
   }
