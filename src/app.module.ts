@@ -1,8 +1,13 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import * as Joi from 'joi';
 import { RestaurantsModule } from './restaurants/restaurants.module';
-import {TypeOrmModule} from '@nestjs/typeorm'
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { UsersModule } from './users/users.module';
@@ -16,11 +21,9 @@ import { jwtMiddleWare } from './jwt/jwt-middleware';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
-      ignoreEnvFile: process.env.NODE_ENV === 'prod', 
+      ignoreEnvFile: process.env.NODE_ENV === 'prod',
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string()
-          .valid('dev', 'prod')
-          .required(),
+        NODE_ENV: Joi.string().valid('dev', 'prod').required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.string().required(),
         DB_USERNAME: Joi.string().required(),
@@ -47,15 +50,14 @@ import { jwtMiddleWare } from './jwt/jwt-middleware';
     UsersModule,
     CommonModule,
     JwtModule.forRoot({
-      privateKey:process.env.PRIVATE_KEY
+      privateKey: process.env.PRIVATE_KEY,
     }),
   ],
   controllers: [],
   providers: [],
 })
-
-export class AppModule implements NestModule{
-  configure(consumer:MiddlewareConsumer){
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer.apply(jwtMiddleWare).forRoutes({
       path: '/graphql',
       method: RequestMethod.POST,
