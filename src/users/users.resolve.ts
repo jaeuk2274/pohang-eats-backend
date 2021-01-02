@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthUser } from 'src/auth/auth-user.decorator';
@@ -9,19 +10,20 @@ import {
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dtos/user-profile.dto';
+import { VerifyEmailInput, VerifyEmailOutput } from './dtos/verify-email.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './users.service';
 
 @Resolver(() => User)
 export class UserResolve {
-  constructor(private readonly users: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Mutation(() => CreateAccountOutput)
   async createAccount(
     @Args('input') createAccountInput: CreateAccountInput,
   ): Promise<CreateAccountOutput> {
     try {
-      const { ok, error } = await this.users.createAccount(createAccountInput);
+      const { ok, error } = await this.userService.createAccount(createAccountInput);
       return {
         ok,
         error,
@@ -37,7 +39,7 @@ export class UserResolve {
   @Mutation(() => LoginOutput)
   async login(@Args('input') loginInput: LoginInput): Promise<LoginOutput> {
     try {
-      const { ok, error, token } = await this.users.login(loginInput);
+      const { ok, error, token } = await this.userService.login(loginInput);
       return { ok, error, token };
     } catch (error) {
       return {
@@ -59,7 +61,7 @@ export class UserResolve {
     @Args() userProfileInput: UserProfileInput,
   ): Promise<UserProfileOutput> {
     try {
-      const user = await this.users.findById(userProfileInput.userId);
+      const user = await this.userService.findById(userProfileInput.userId);
       if (!user) {
         throw Error();
       }
@@ -81,8 +83,27 @@ export class UserResolve {
     @AuthUser() authUser: User,
     @Args('input') editProfileInput: EditProfileInput,
   ): Promise<EditProfileOutput> {
+    console.log("@AuthUser()");
+    console.log("@AuthUser()", authUser);
     try {
-      await this.users.editProfile(authUser.id, editProfileInput);
+      await this.userService.editProfile(authUser.id, editProfileInput);
+      return {
+        ok: true,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
+  }
+
+  @Mutation(returns => VerifyEmailOutput)
+  async verifyEmail(
+    @Args('input') { code }: VerifyEmailInput,
+  ): Promise<VerifyEmailOutput> {
+    try {
+      await this.userService.verifyEmail(code);
       return {
         ok: true,
       };

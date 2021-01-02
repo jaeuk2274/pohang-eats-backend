@@ -10,10 +10,11 @@ import { Verification } from './entities/verification.entity';
 
 @Injectable()
 export class UserService {
+  [x: string]: any;
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
     @InjectRepository(Verification)
-    private readonly verification: Repository<Verification>,
+    private readonly verifications: Repository<Verification>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -40,7 +41,10 @@ export class UserService {
     password,
   }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
     try {
-      const user = await this.users.findOne({ email });
+      const user = await this.users.findOne(
+        { email },
+        { select: ['id', 'password'] },
+      );
       if (!user) {
         return { ok: false, error: 'User not found' };
       }
@@ -70,11 +74,25 @@ export class UserService {
     if (email) {
       user.email = email;
       user.verified = false;
-      await this.verification.save(this.verification.create({ user }));
+      await this.verifications.save(this.verifications.create({ user }));
     }
     if (password) {
       user.password = password;
     }
     return this.users.save(user);
+  }
+
+  async verifyEmail(code: string): Promise<boolean> {
+    const verification = await this.verifications.findOne(
+      { code },
+      // { loadRelationIds: true }, // id만 가져옴
+      { relations: ['user'] },
+    );
+    console.log('loadRelationIds/relations 차이 확인\n', verification);
+    if (verification) {
+      verification.user.verified = true;
+      this.users.save(verification.user);
+    }
+    return false;
   }
 }
