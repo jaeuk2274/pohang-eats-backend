@@ -9,6 +9,7 @@ import { CoreEntity } from 'src/common/entities/core.entity';
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
+import { boolean } from 'joi';
 
 enum UserRole {
   Client,
@@ -34,6 +35,10 @@ export class User extends CoreEntity {
   @Field((type) => UserRole)
   @IsEnum(UserRole)
   role: UserRole;
+
+  @Column({ default: false })
+  @Field((type) => Boolean)
+  verified: boolean;
 
   @BeforeInsert()
   @BeforeUpdate()

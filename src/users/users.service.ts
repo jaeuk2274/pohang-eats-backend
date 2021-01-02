@@ -6,11 +6,14 @@ import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from 'src/jwt/jwt.service';
 import { EditProfileInput } from './dtos/edit-profile.dto';
+import { Verification } from './entities/verification.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(Verification)
+    private readonly verification: Repository<Verification>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -25,6 +28,7 @@ export class UserService {
         return { ok: false, error: 'There is a user with that email already' };
       }
       await this.users.save(this.users.create({ email, password, role }));
+
       return { ok: true };
     } catch (e) {
       return { ok: false, error: "Couldn't create account" };
@@ -45,7 +49,6 @@ export class UserService {
         return { ok: false, error: 'Wrong password' };
       }
       const token = this.jwtService.sign(user.id);
-      console.log('login-token', token);
       return {
         ok: true,
         token: token,
@@ -65,8 +68,9 @@ export class UserService {
   ): Promise<User> {
     const user = await this.users.findOne(userId);
     if (email) {
-      //veridate
       user.email = email;
+      user.verified = false;
+      await this.verification.save(this.verification.create({ user }));
     }
     if (password) {
       user.password = password;

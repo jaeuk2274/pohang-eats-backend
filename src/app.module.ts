@@ -6,16 +6,14 @@ import {
 } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import * as Joi from 'joi';
-import { RestaurantsModule } from './restaurants/restaurants.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { UsersModule } from './users/users.module';
-import { CommonModule } from './common/common.module';
 import { User } from './users/entities/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { jwtMiddleWare } from './jwt/jwt-middleware';
-import { AuthModule } from './auth/auth.module';
+import { Verification } from './users/entities/verification.entity';
 
 @Module({
   imports: [
@@ -42,7 +40,7 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: true,
-      entities: [Restaurant, User],
+      entities: [Restaurant, User, Verification],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
