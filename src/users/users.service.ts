@@ -112,6 +112,7 @@ export class UserService {
         verification.user.verified = true;
         console.log(verification.user);
         this.users.save(verification.user);
+        this.users.delete(verification.id);
         return { ok: true };
       }
       return { ok: false, error: 'Verification not found.' };

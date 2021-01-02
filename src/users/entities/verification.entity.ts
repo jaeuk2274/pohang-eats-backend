@@ -12,7 +12,8 @@ export class Verification extends CoreEntity {
   @Field((type) => String)
   code: string;
 
-  @OneToOne(type => User, { onDelete: 'CASCADE' }) // user삭제되면 같이 삭제
+  // 한 유저는 한 인증서만 가지고 있다.(해당 메일 인증)
+  @OneToOne((type) => User, { onDelete: 'CASCADE' }) // user삭제되면 같이 삭제
   @JoinColumn()
   user: User;
 

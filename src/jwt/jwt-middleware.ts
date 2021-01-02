@@ -1,6 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction } from 'express';
-import { decode } from 'querystring';
 import { UserService } from 'src/users/users.service';
 import { JwtService } from './jwt.service';
 

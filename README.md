@@ -33,7 +33,8 @@ var str: String = new String("Hello world"); // Uses the JavaScript String objec
 var str: string = String("Hello World"); // Uses the TypeScript string type
 ```
 
-
+- mailgun 서비스
+- receive smss 가짜 sms 인증
 
 ## User Model:
 
