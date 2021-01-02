@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { ok } from 'assert';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 import {
@@ -13,11 +12,11 @@ import { UserProfileInput, UserProfileOutput } from './dtos/user-profile.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './users.service';
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export class UserResolve {
   constructor(private readonly users: UserService) {}
 
-  @Mutation((returns) => CreateAccountOutput)
+  @Mutation(() => CreateAccountOutput)
   async createAccount(
     @Args('input') createAccountInput: CreateAccountInput,
   ): Promise<CreateAccountOutput> {
@@ -28,12 +27,14 @@ export class UserResolve {
         error,
       };
     } catch (error) {
-      ok: false;
-      error;
+      return {
+        ok: false,
+        error,
+      };
     }
   }
 
-  @Mutation((returns) => LoginOutput)
+  @Mutation(() => LoginOutput)
   async login(@Args('input') loginInput: LoginInput): Promise<LoginOutput> {
     try {
       const { ok, error, token } = await this.users.login(loginInput);
@@ -46,14 +47,14 @@ export class UserResolve {
     }
   }
 
-  @Query((returns) => User)
+  @Query(() => User)
   @UseGuards(AuthGuard)
   me(@AuthUser() authUser: User) {
     console.log('me @AuthUser', authUser);
   }
 
   @UseGuards(AuthGuard)
-  @Query((returns) => UserProfileOutput)
+  @Query(() => UserProfileOutput)
   async userProfile(
     @Args() userProfileInput: UserProfileInput,
   ): Promise<UserProfileOutput> {
@@ -75,13 +76,16 @@ export class UserResolve {
   }
 
   @UseGuards(AuthGuard)
-  @Mutation((returns) => EditProfileOutput)
+  @Mutation(() => EditProfileOutput)
   async editProfile(
     @AuthUser() authUser: User,
     @Args('input') editProfileInput: EditProfileInput,
   ): Promise<EditProfileOutput> {
     try {
       await this.users.editProfile(authUser.id, editProfileInput);
+      return {
+        ok: true,
+      };
     } catch (error) {
       return {
         ok: false,
