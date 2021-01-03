@@ -52,3 +52,9 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - See Profile
 - Edit Profile
 - Verify Email
+
+## Restaurant Model
+- name
+- category
+- address
+- coverImage
