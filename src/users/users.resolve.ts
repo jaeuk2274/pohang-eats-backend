@@ -38,6 +38,12 @@ export class UserResolve {
     return this.usersService.findById(userProfileInput.userId);
   }
 
+  @Query(() => User)
+  @UseGuards(AuthGuard)
+  me(@AuthUser() authUser: User) {
+    return authUser;
+  }
+
   @UseGuards(AuthGuard)
   @Mutation(() => EditProfileOutput)
   async editProfile(
