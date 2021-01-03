@@ -36,19 +36,17 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - mailgun 서비스
 - receive smss 가짜 sms 인증
 
-## User Model:
 
+## User Model:
 - id
 - createdAt
 - updatedAt
-
 - email
 - password
 - role(client|owner|delivery)
-
+- verified
 
 ## User CRUD:
-
 - Create Account
 - Log In
 - See Profile
