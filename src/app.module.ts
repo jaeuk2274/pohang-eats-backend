@@ -17,6 +17,7 @@ import { Verification } from './users/entities/verification.entity';
 import { MailModule } from './mail/mail.module';
 import { Category } from './restaurants/entities/cetegory.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
     JwtModule.forRoot({
       privateKey: process.env.PRIVATE_KEY,
     }),
+    AuthModule,
     UsersModule,
     RestaurantsModule,
     MailModule.forRoot({
