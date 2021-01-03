@@ -13,11 +13,11 @@ export class MailService {
     // this.sendVerificationEmail('jw2274@naver.com', '343434');
   }
 
-  private async sendEmail(
+  async sendEmail(
     subject: string,
     template: string,
     emailVars: EmailVar[],
-  ) {
+  ): Promise<boolean> {
     const form = new FormData();
     form.append('from', `Pohang Eats <mailgun@${this.options.domain}>`);
     form.append('to', `jw2274@naver.com`);
@@ -25,10 +25,10 @@ export class MailService {
     form.append('template', template);
     // form.append('v:code', 'asasas');
     // form.append('v:username', 'jaeuk!!!');
-    emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
+    //emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
 
     try {
-      const response = await got(
+      const response = await got.post(
         `https://api.mailgun.net/v3/${this.options.domain}/messages`,
         {
           method: 'POST',
@@ -40,9 +40,9 @@ export class MailService {
           body: form,
         },
       );
-      console.log(response.body);
+      return true;
     } catch (error) {
-      console.log(error);
+      return false;
     }
   }
 

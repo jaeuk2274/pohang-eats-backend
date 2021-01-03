@@ -159,7 +159,6 @@ describe('UserService', () => {
       };
       usersRepository.findOne.mockResolvedValue(mockedUser);
       const result = await service.login(loginArgs);
-      console.log(result);
       expect(jwtService.sign).toHaveBeenCalledTimes(1);
       expect(jwtService.sign).toHaveBeenCalledWith(expect.any(Number));
       expect(result).toEqual({ ok: true, token: 'signed-token-baby' });
@@ -179,7 +178,6 @@ describe('UserService', () => {
     it('should find an existing user', async () => {
       usersRepository.findOneOrFail.mockResolvedValue(findByIdArgs);
       const result = await service.findById(9999); // 어떤값을 넣던 의미없다. 위 행에서 mockResolvedValue 했기 때문
-      console.log('result', result);
       expect(result).toEqual({ ok: true, user: findByIdArgs });
     });
 
