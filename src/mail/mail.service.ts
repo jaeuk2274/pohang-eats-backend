@@ -25,7 +25,7 @@ export class MailService {
     form.append('template', template);
     // form.append('v:code', 'asasas');
     // form.append('v:username', 'jaeuk!!!');
-    //emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
+    emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
 
     try {
       const response = await got.post(
