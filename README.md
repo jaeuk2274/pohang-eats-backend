@@ -59,14 +59,17 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - address
 - coverImage
 
+
 - Create Restaurant
 - Edit Restaurant
 - Delete Restaurant
+
 
 - See Categories
 - See Restaurants by Category (pagination)
 - See Restaurants (pagination)
 - See Restaurant
+
 
 - Create Dish
 - Edit Dish
