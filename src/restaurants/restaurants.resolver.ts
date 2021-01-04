@@ -1,8 +1,17 @@
-import { Resolver, Query, Args, Mutation, Int, ResolveField, Parent } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  Mutation,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { Role } from 'src/auth/role.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { AllCategoriesOutput } from './dtos/all-categories.dto';
+import { CategoryOutput, CategoryInput } from './dtos/category.dto';
 import {
   CreateRestaurantInput,
   CreateRestaurantOutput,
@@ -70,5 +79,10 @@ export class CategoryResolver {
   @Query((type) => AllCategoriesOutput)
   allCategories(): Promise<AllCategoriesOutput> {
     return this.restaurantService.allCategories();
+  }
+
+  @Query((type) => CategoryOutput)
+  category(@Args() categoryInput: CategoryInput): Promise<CategoryOutput> {
+    return this.restaurantService.findCategoryBySlug(categoryInput);
   }
 }
