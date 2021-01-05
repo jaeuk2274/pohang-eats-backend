@@ -69,7 +69,7 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - See Restaurants by Category (pagination)
 - See Restaurants (pagination)
 - See Restaurant
-
+- Search Restaurant
 
 - Create Dish
 - Edit Dish
