@@ -37,6 +37,35 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - receive smss 가짜 sms 인증
 
 
+- rest
+```
+@InputType()
+export class UpdateEpisodeDto extends EpisodesSearchInput {
+  @Field((_) => String, { nullable: true })
+  @IsString()
+  @IsOptional()
+  readonly title?: string;
+
+  @Field((_) => String, { nullable: true })
+  @IsString()
+  @IsOptional()
+  readonly category?: string;
+}
+//
+return this.podcastService.updateEpisode(updateEpisodeDto);
+//
+  updateEpisode({
+    podcastId,
+    episodeId,
+    ...rest // ..rest 나머지
+  }: UpdateEpisodeDto): CoreOutput {
+    const { podcast, error, ok } = this.getPodcast(podcastId);
+    if (!ok) {
+      return { ok, error };
+    }
+    ...
+```
+
 ## User Model:
 - id
 - createdAt
