@@ -43,13 +43,22 @@ export class Dish extends CoreEntity {
   options?: DishOption[];
 }
 
+@InputType('DishChoiceInputType', { isAbstract: true })
+@ObjectType()
+class DishChoice {
+  @Field((type) => String)
+  name: string;
+  @Field((type) => Int, { nullable: true })
+  extra?: number;
+}
+
 @InputType('DishOptionInputType', { isAbstract: true })
 @ObjectType()
 class DishOption {
   @Field((type) => String)
   name: string;
-  @Field((type) => [String], { nullable: true })
-  choices?: string[];
-  @Field((type) => Int)
-  extra: number;
+  @Field((type) => [DishChoice], { nullable: true })
+  choices?: DishChoice[];
+  @Field((type) => Int, { nullable: true })
+  extra?: number;
 }
