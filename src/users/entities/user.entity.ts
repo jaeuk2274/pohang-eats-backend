@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 import { boolean } from 'joi';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
-import { Order } from 'src/orders/entites/order.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 export enum UserRole {
   Client = 'Client',

@@ -20,7 +20,7 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
 import { AuthModule } from './auth/auth.module';
 import { Dish } from './restaurants/entities/dish.entity';
 import { OrdersModule } from './orders/orders.module';
-import { Order } from './orders/entites/order.entity';
+import { Order } from './orders/entities/order.entity';
 
 @Module({
   imports: [

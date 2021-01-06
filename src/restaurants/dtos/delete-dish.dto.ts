@@ -4,7 +4,7 @@ import { In } from 'typeorm';
 
 @InputType()
 export class DeleteDishInput {
-  @Field(type => Int)
+  @Field((type) => Int)
   dishId: number;
 }
 
