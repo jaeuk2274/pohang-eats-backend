@@ -19,6 +19,8 @@ import { Category } from './restaurants/entities/cetegory.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { AuthModule } from './auth/auth.module';
 import { Dish } from './restaurants/entities/dish.entity';
+import { OrdersModule } from './orders/orders.module';
+import { Order } from './orders/entites/order.entity';
 
 @Module({
   imports: [
@@ -47,8 +49,17 @@ import { Dish } from './restaurants/entities/dish.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
-      logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [Restaurant, User, Verification, Restaurant, Category, Dish],
+      logging:
+        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+      entities: [
+        Restaurant,
+        User,
+        Verification,
+        Restaurant,
+        Category,
+        Dish,
+        Order,
+      ],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
@@ -65,6 +76,7 @@ import { Dish } from './restaurants/entities/dish.entity';
       domain: process.env.MAILGUN_DOMAIN_NAME,
       fromEmail: process.env.MAILGUN_FROM_EMAIL,
     }),
+    OrdersModule,
   ],
   controllers: [],
   providers: [],
