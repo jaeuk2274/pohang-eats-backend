@@ -40,6 +40,17 @@ var str: string = String("Hello World"); // Uses the TypeScript string type
 - rest
 ```
 @InputType()
+export class EpisodesSearchInput {
+  @Field((type) => Number)
+  @IsNumber()
+  podcastId: number;
+
+  @Field((type) => Number)
+  @IsNumber()
+  episodeId: number;
+}
+//
+@InputType()
 export class UpdateEpisodeDto extends EpisodesSearchInput {
   @Field((_) => String, { nullable: true })
   @IsString()
