@@ -65,7 +65,14 @@ import { OrderItem } from './orders/entities/order-item.entity';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      context: ({ req }) => ({ user: req['user'] }),
+      context: ({ req, connection }) => {
+        const TOKEN_KEY = 'x-jwt';
+        console.log('req-----', req);
+        console.log('connection-----', connection);
+        return {
+          token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
+        };
+      },
     }),
     JwtModule.forRoot({
       privateKey: process.env.PRIVATE_KEY,
@@ -83,18 +90,20 @@ import { OrderItem } from './orders/entities/order-item.entity';
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(jwtMiddleWare).forRoutes({
-      path: '/graphql',
-      method: RequestMethod.POST,
-      //path: '*',
-      //method: RequestMethod.ALL,
-    });
-    // 특정 경로만 제외
-    // consumer.apply(jwtMiddleWare).exclude({
-    //   path: '/api',
-    //   method: RequestMethod.ALL,
-    // });
-  }
-}
+export class AppModule {}
+
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(jwtMiddleWare).forRoutes({
+//       path: '/graphql',
+//       method: RequestMethod.POST,
+//       //path: '*',
+//       //method: RequestMethod.ALL,
+//     });
+//     // 특정 경로만 제외
+//     // consumer.apply(jwtMiddleWare).exclude({
+//     //   path: '/api',
+//     //   method: RequestMethod.ALL,
+//     // });
+//   }
+// }
