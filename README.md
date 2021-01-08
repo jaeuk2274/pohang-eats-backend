@@ -109,11 +109,11 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
 - See Restaurants by Category (pagination)
 - See Restaurants (pagination)
 
-## 
 - Create Dish
 - Edit Dish
 - Delete Dish
 
+## Order Model
 - Orders CRUD
 - Orders Subscription (Owner, Customer, Delivery)
 
