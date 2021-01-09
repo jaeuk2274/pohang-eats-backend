@@ -22,6 +22,7 @@ import { Dish } from './restaurants/entities/dish.entity';
 import { OrdersModule } from './orders/orders.module';
 import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -67,8 +68,6 @@ import { OrderItem } from './orders/entities/order-item.entity';
       autoSchemaFile: true,
       context: ({ req, connection }) => {
         const TOKEN_KEY = 'x-jwt';
-        console.log('req-----', req);
-        console.log('connection-----', connection);
         return {
           token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
         };
@@ -86,6 +85,7 @@ import { OrderItem } from './orders/entities/order-item.entity';
       fromEmail: process.env.MAILGUN_FROM_EMAIL,
     }),
     OrdersModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
