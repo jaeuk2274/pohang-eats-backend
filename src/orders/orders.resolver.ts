@@ -10,7 +10,7 @@ import { GetOrdersOutput, GetOrdersInput } from './dtos/get-orders.dto';
 import { Order } from './entities/order.entity';
 import { OrderService } from './orders.service';
 import { Inject } from '@nestjs/common';
-import { NEW_PENDING_ORDER, PUB_SUB } from 'src/common/common.constants';
+import { NEW_COOKED_ORDER, NEW_PENDING_ORDER, PUB_SUB } from 'src/common/common.constants';
 
 const pubsub = new PubSub();
 
@@ -69,6 +69,12 @@ export class OrderResolver {
     return this.pubSub.asyncIterator(NEW_PENDING_ORDER);
   }
 
+  @Subscription((returns) => Order)
+  @Role(['Delivery'])
+  cookedOrders() {
+    return this.pubSub.asyncIterator(NEW_COOKED_ORDER);
+  }
+
   // subscription 예제
   /*
   // 발생
@@ -99,7 +105,4 @@ export class OrderResolver {
     return this.pubSub.asyncIterator('hotPotatos');
   }
   */
-
-
-
 }
