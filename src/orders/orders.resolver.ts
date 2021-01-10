@@ -69,10 +69,15 @@ export class OrderResolver {
   @Subscription((returns) => String, {
     filter: ({ readyPotato }, { potatoId }) => {
       console.log(
-        `readyPotato(새로 들어오려는 id):${readyPotato} / potatoId(기존 ready 한 id):${potatoId}`,
+        `첫번째args: payload, 두번째args: 이 resolver의 var, 세번째: context`,
+      );
+      console.log(
+        `새로 들어오려는 id:${readyPotato} / 기존 ready한 id:${potatoId}`,
       );
       return readyPotato === potatoId;
     },
+    resolve: ({ readyPotato }) =>
+      `Your potato with the id ${readyPotato} is ready!`,
   })
   @Role(['Any'])
   readyPotato(@Args('potatoId') potatoId: number) {
