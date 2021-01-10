@@ -66,7 +66,12 @@ import { CommonModule } from './common/common.module';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+      installSubscriptionHandlers: true,
       context: ({ req, connection }) => {
+        if (req) {
+          console.log('req : ', req.headers);
+        }
+        console.log('connection : ', connection);
         const TOKEN_KEY = 'x-jwt';
         return {
           token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
