@@ -10,7 +10,7 @@ import { GetOrdersOutput, GetOrdersInput } from './dtos/get-orders.dto';
 import { Order } from './entities/order.entity';
 import { OrderService } from './orders.service';
 import { Inject } from '@nestjs/common';
-import { PUB_SUB } from 'src/common/common.constants';
+import { NEW_PENDING_ORDER, PUB_SUB } from 'src/common/common.constants';
 
 const pubsub = new PubSub();
 
@@ -58,6 +58,19 @@ export class OrderResolver {
     return this.ordersService.editOrder(user, editOrderInput);
   }
 
+  @Subscription((returns) => Order, {
+    filter: (payload, _, context) => {
+      console.log(payload, context);
+      return true;
+    },
+  })
+  @Role(['Owner'])
+  pendingOrders() {
+    return this.pubSub.asyncIterator(NEW_PENDING_ORDER);
+  }
+
+  // subscription 예제
+  // 발생
   @Mutation((returns) => Boolean)
   async potatoReady(@Args('potatoId') potatoId: number) {
     await this.pubSub.publish('hotPotatos', {
@@ -65,7 +78,7 @@ export class OrderResolver {
     });
     return true;
   }
-
+  // 대기
   @Subscription((returns) => String, {
     filter: ({ readyPotato }, { potatoId }) => {
       console.log(
