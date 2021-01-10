@@ -59,10 +59,10 @@ export class OrderResolver {
   }
 
   @Subscription((returns) => Order, {
-    filter: (payload, _, context) => {
-      console.log(payload, context);
-      return true;
+    filter: ({ pendingOrders: { ownerId } }, _, { user }) => {
+      return ownerId === user.id;
     },
+    resolve: ({ pendingOrders: { order } }) => order,
   })
   @Role(['Owner'])
   pendingOrders() {
@@ -70,6 +70,7 @@ export class OrderResolver {
   }
 
   // subscription 예제
+  /*
   // 발생
   @Mutation((returns) => Boolean)
   async potatoReady(@Args('potatoId') potatoId: number) {
@@ -97,4 +98,8 @@ export class OrderResolver {
     console.log(potatoId);
     return this.pubSub.asyncIterator('hotPotatos');
   }
+  */
+
+
+
 }
