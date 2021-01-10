@@ -2,7 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PubSub } from 'apollo-server-express';
 import { async } from 'rxjs';
-import { NEW_COOKED_ORDER, NEW_ORDER_UPDATE, NEW_PENDING_ORDER, PUB_SUB } from 'src/common/common.constants';
+import {
+  NEW_COOKED_ORDER,
+  NEW_ORDER_UPDATE,
+  NEW_PENDING_ORDER,
+  PUB_SUB,
+} from 'src/common/common.constants';
 import { Dish } from 'src/restaurants/entities/dish.entity';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { User, UserRole } from 'src/users/entities/user.entity';
@@ -240,6 +245,7 @@ export class OrderService {
           });
         }
       }
+      console.log('newOrder--------', newOrder);
       await this.pubSub.publish(NEW_ORDER_UPDATE, { orderUpdates: newOrder });
       return {
         ok: true,
