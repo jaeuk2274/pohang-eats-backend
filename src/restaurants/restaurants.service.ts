@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Cron, Interval, SchedulerRegistry, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Like, Raw, Repository } from 'typeorm';
@@ -39,6 +40,7 @@ export class RestaurantService {
     private readonly categories: CategoryRepository,
     @InjectRepository(Dish)
     private readonly dishes: Repository<Dish>,
+    private schedulerRegistry: SchedulerRegistry,
   ) {}
 
   async createRestaurant(
@@ -370,5 +372,24 @@ export class RestaurantService {
         error: 'Could not delete dish',
       };
     }
+  }
+
+  @Cron('30 * * * * *', {
+    name: 'myJob',
+  })
+  checkForPayments() {
+    console.log('Checking for payments....(cron)');
+    const job = this.schedulerRegistry.getCronJob('myJob');
+    job.stop();
+  }
+
+  @Interval(5000)
+  checkForPaymentsI() {
+    console.log('Checking for payments....(interval)');
+  }
+
+  @Timeout(20000)
+  afterStarts() {
+    console.log('Congrats!');
   }
 }
