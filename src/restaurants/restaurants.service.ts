@@ -380,22 +380,22 @@ export class RestaurantService {
     }
   }
 
-  @Cron('30 * * * * *', {
-    name: 'myJob',
-  })
-  checkForPayments() {
-    console.log('Checking for payments....(cron)');
-    const job = this.schedulerRegistry.getCronJob('myJob');
-    job.stop();
-  }
+  // @Cron('30 * * * * *', {
+  //   name: 'myJob',
+  // })
+  // checkForPayments() {
+  //   console.log('Checking for payments....(cron)');
+  //   const job = this.schedulerRegistry.getCronJob('myJob');
+  //   job.stop();
+  // }
 
-  @Interval(5000)
-  checkForPaymentsI() {
-    console.log('Checking for payments....(interval)');
-  }
+  // @Interval(5000)
+  // checkForPaymentsI() {
+  //   console.log('Checking for payments....(interval)');
+  // }
 
-  @Timeout(20000)
-  afterStarts() {
-    console.log('Congrats!');
-  }
+  // @Timeout(20000)
+  // afterStarts() {
+  //   console.log('Congrats!');
+  // }
 }
