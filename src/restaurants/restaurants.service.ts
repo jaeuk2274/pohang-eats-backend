@@ -199,6 +199,9 @@ export class RestaurantService {
           // name: Like(`%${query}%`),
           name: Raw((name) => `${name} ILIKE '%${query}%'`),
         },
+        order: {
+          isPromoted: 'DESC',
+        },
         skip: (page - 1) * 25,
         take: 25,
       });
@@ -247,6 +250,9 @@ export class RestaurantService {
       const restaurants = await this.restaurants.find({
         where: {
           category,
+        },
+        order: {
+          isPromoted: 'DESC',
         },
         take: 25,
         skip: (page - 1) * 25,
