@@ -77,7 +77,7 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
     ...
 ```
 
-## User Model:
+## User
 - id
 - createdAt
 - updatedAt
@@ -86,14 +86,13 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
 - role(client|owner|delivery)
 - verified
 
-## User CRUD:
 - Create Account
 - Log In
 - See Profile
 - Edit Profile
 - Verify Email
 
-## Restaurant Model
+## Restaurant
 - name
 - category
 - address
@@ -113,7 +112,7 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
 - Edit Dish
 - Delete Dish
 
-## Order Model
+## Order 
 - Orders CRUD
 - Orders Subscription:
   - Pending Orders (Owner) (T: createOrder)
