@@ -85,7 +85,7 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
 - password
 - role(client|owner|delivery)
 - verified
-
+- 
 - Create Account
 - Log In
 - See Profile
@@ -97,17 +97,17 @@ return this.podcastService.updateEpisode(updateEpisodeDto);
 - category
 - address
 - coverImage
-
+- 
 - Create Restaurant
 - Edit Restaurant
 - Delete Restaurant
 - See Restaurant
 - Search Restaurant
-
+- 
 - See Categories
 - See Restaurants by Category (pagination)
 - See Restaurants (pagination)
-
+- 
 - Create Dish
 - Edit Dish
 - Delete Dish
