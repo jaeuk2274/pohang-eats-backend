@@ -8,6 +8,7 @@ import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+//import * as bcryptjs from 'bcryptjs';
 import { InternalServerErrorException } from '@nestjs/common';
 import { boolean } from 'joi';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
@@ -66,6 +67,11 @@ export class User extends CoreEntity {
   async hassPassword(): Promise<void> {
     if (this.password) {
       try {
+        // 1.bcryptjs
+        // const salt: string = await bcryptjs.genSalt(10);
+        // this.password = await bcryptjs.hash(this.password, salt);
+
+        // 2.bcrypt
         this.password = await bcrypt.hash(this.password, 10);
       } catch (e) {
         console.log(e);
@@ -76,6 +82,10 @@ export class User extends CoreEntity {
 
   async checkPassword(aPassword): Promise<boolean> {
     try {
+      // 1.bcryptjs
+      // const ok = await bcryptjs.compare(aPassword, this.password);
+
+      // 2.bcrypt
       const ok = await bcrypt.compare(aPassword, this.password);
       return ok;
     } catch (e) {
